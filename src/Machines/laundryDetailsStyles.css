@@ -1,0 +1,122 @@
+/* General body and page styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f8f9fa;
+  }
+  
+  .laundry-details-page {
+    padding: 1.5rem;
+  }
+  
+  /* Navbar styling */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3b82f6;
+    color: white;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .nav-content h1 {
+    margin: 0;
+  }
+  
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  /* Back button styling */
+  .back-btn {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+ 
+  }
+  
+  .back-btn:hover {
+    background-color: #2563eb;
+  }
+  
+  /* Adding space below navbar */
+  .details-content {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem; /* Space between navbar and content */
+  }
+  
+  /* Laundry info card */
+  .laundry-info {
+    width: 30%;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: calc(100vh - 100px); /* Full height minus navbar and padding */
+  }
+  
+  /* Machines section */
+  .machines-section {
+    flex: 1;
+  }
+  
+  .machines-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  
+  .machine-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .start-cycle-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .start-cycle-btn:disabled {
+    background: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .start-cycle-btn:hover:enabled {
+    background: #2563eb;
+  }
+  
