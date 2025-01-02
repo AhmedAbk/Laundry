@@ -14,7 +14,6 @@ function Laundries() {
       id: 1,
       name: "Fresh & Clean Laundromat",
       address: "123 Main St, New York, NY",
-      rating: 4.5,
       position: { lat: 40.7128, lng: -74.0060 },
       services: ["Dry Cleaning", "Self-Service"],
       openNow: true,
@@ -23,8 +22,7 @@ function Laundries() {
     {
         id:2,
         name: "See Laundromat",
-        address: "123 Main St, New York, NY",
-        rating: 4.5,
+        address: "123 Main St, New York, NY", 
         position: { lat: 90.7128, lng: -200.0060 },
         services: ["Dry Cleaning", "Self-Service"],
         openNow: true,
@@ -122,8 +120,7 @@ function Laundries() {
                 >
                   <div className="info-window">
                     <h3>{selectedLaundry.name}</h3>
-                    <p>{selectedLaundry.address}</p>
-                    <p>Rating: {selectedLaundry.rating} ★</p>
+                    <p>{selectedLaundry.address}</p> 
                   </div>
                 </InfoWindow>
               )}
