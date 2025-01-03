@@ -72,7 +72,7 @@ function Laundries() {
                     ))}
                   </div>
                   <div className="card-footer"> 
-      <button className="book-btn" onClick={(e) => {
+        <button className="book-btn" onClick={(e) => {
         e.stopPropagation();
         handleBookNow(laundry);
       }}>Book Now</button>

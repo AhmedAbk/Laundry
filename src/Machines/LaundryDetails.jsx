@@ -10,6 +10,12 @@ function LaundryDetails() {
   const [selectedCycle, setSelectedCycle] = useState({});
   const [laundryData, setLaundryData] = useState(location.state?.laundry || {});
 
+  const calculateMachineIncome = (machine) => {
+    return machine.cycles.reduce((total, cycle) => {
+      return total + (cycle.transactions?.length || 0) * cycle.price;
+    }, 0);
+  };
+
   const handleStartCycle = async (machineId, cycleId) => {
     try {
       const response = await fetch('https://localhost:7244/api/configuration/startMachine', {
@@ -30,7 +36,7 @@ function LaundryDetails() {
             machine.id === machineId
               ? { ...machine, status: true }
               : machine
-          )
+          ) 
         }));
       }
     } catch (error) {
@@ -96,6 +102,7 @@ function LaundryDetails() {
             {laundryData.machines && laundryData.machines.map((machine) => (
               <div key={machine.id} className="machine-card">
                 <h3>{machine.type}</h3>
+                <p><strong>Total Income:</strong> ${calculateMachineIncome(machine)}</p>
                 <p><strong>Status:</strong> {machine.status ? 'In Use' : 'Available'}</p>
                 <select 
                   onChange={(e) => setSelectedCycle({...selectedCycle, [machine.id]: e.target.value})}
