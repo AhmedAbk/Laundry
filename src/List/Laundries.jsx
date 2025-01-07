@@ -84,9 +84,9 @@ function Laundries() {
       <nav className="laundry-nav">
         <div className="nav-content">
           <h1>Your Laundries </h1>
-          <div className="user-profile">
-            <FontAwesomeIcon icon={faUserCircle} size="2x" style={{ color: "#fff", cursor: "pointer" }} />
-          </div>
+          <div className="user-profile" onClick={() => navigate('/user')}>
+  <FontAwesomeIcon icon={faUserCircle} size="2x" style={{ color: "#fff", cursor: "pointer" }} />
+</div>
         </div>
       </nav>
 

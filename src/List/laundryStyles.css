@@ -206,3 +206,11 @@
 .update-btn:active, .delete-btn:active {
   transform: translateY(0);
 }
+.user-profile {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.user-profile:hover {
+  opacity: 0.8;
+}
