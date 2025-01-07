@@ -10,7 +10,8 @@ function Laundries() {
   const [laundries, setLaundries] = useState([]);  
   const [selectedLaundry, setSelectedLaundry] = useState(null);
   const [mapCenter, setMapCenter] = useState({ lat: 40.7128, lng: -74.0060 }); 
- 
+  const [editingLaundry, setEditingLaundry] = useState(null);
+
   useEffect(() => {
     const fetchLaundries = async () => {
       try {
@@ -25,9 +26,59 @@ function Laundries() {
   
     fetchLaundries();
   }, []);
+
   const handleBookNow = (laundry) => {
     navigate(`/laundry-details/${laundry.id}`, { state: { laundry } });
   };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`https://localhost:7244/api/Laundry/delete/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setLaundries(laundries.filter(laundry => laundry.id !== id));
+      } else {
+        console.error("Failed to delete laundry");
+      }
+    } catch (error) {
+      console.error("Error deleting laundry:", error);
+    }
+  };
+
+  const handleUpdate = (laundry) => {
+    setEditingLaundry(laundry);
+  };
+
+  const handleUpdateSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(`https://localhost:7244/api/Laundry/update/${editingLaundry.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editingLaundry),
+      });
+      if (response.ok) {
+        setLaundries(laundries.map(laundry => laundry.id === editingLaundry.id ? editingLaundry : laundry));
+        setEditingLaundry(null);
+      } else {
+        console.error("Failed to update laundry");
+      }
+    } catch (error) {
+      console.error("Error updating laundry:", error);
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setEditingLaundry({
+      ...editingLaundry,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="laundry-page">
       <nav className="laundry-nav">
@@ -51,11 +102,31 @@ function Laundries() {
                   setMapCenter({ lat: laundry.latitude, lng: laundry.longitude });  
                 }}
               > 
-                <div className="card-header">
-                  <div className="status-badge">
-                    {laundry.openNow ? 'Open Now' : 'Open Now'}
-                  </div>
-                </div>
+<div className="card-header">
+  <div className="status-badge">
+    {laundry.openNow ? 'Open Now' : 'Open Now'}
+  </div>
+  <div>
+    <button 
+      className="update-btn" 
+      onClick={(e) => { 
+        e.stopPropagation(); 
+        handleUpdate(laundry); 
+      }}
+    >
+      Update
+    </button>
+    <button 
+      className="delete-btn" 
+      onClick={(e) => { 
+        e.stopPropagation(); 
+        handleDelete(laundry.id); 
+      }}
+    >
+      Delete
+    </button>
+  </div>
+</div>
 
                 <div className="card-body">
                   <h3>{laundry.nomLaverie}</h3>
@@ -72,11 +143,11 @@ function Laundries() {
                     ))}
                   </div>
                   <div className="card-footer"> 
-        <button className="book-btn" onClick={(e) => {
-        e.stopPropagation();
-        handleBookNow(laundry);
-      }}>Book Now</button>
-    </div>
+                    <button className="book-btn" onClick={(e) => {
+                      e.stopPropagation();
+                      handleBookNow(laundry);
+                    }}>Book Now</button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -120,6 +191,41 @@ function Laundries() {
           </LoadScript>
         </div>
       </div>
+
+      {editingLaundry && (
+        <div className="edit-modal">
+          <form onSubmit={handleUpdateSubmit}>
+            <h2>Edit Laundry</h2>
+            <label>
+              Name:
+              <input type="text" name="nomLaverie" value={editingLaundry.nomLaverie} onChange={handleInputChange} />
+            </label>
+            <label>
+              Address:
+              <input type="text" name="address" value={editingLaundry.address} onChange={handleInputChange} />
+            </label>
+            <label>
+              Latitude:
+              <input type="number" name="latitude" value={editingLaundry.latitude} onChange={handleInputChange} />
+            </label>
+            <label>
+              Longitude:
+              <input type="number" name="longitude" value={editingLaundry.longitude} onChange={handleInputChange} />
+            </label>
+            <label>
+              Services:
+              <input type="text" name="services" value={editingLaundry.services.join(', ')} onChange={(e) => {
+                setEditingLaundry({
+                  ...editingLaundry,
+                  services: e.target.value.split(',').map(s => s.trim()),
+                });
+              }} />
+            </label>
+            <button type="submit">Save</button>
+            <button type="button" onClick={() => setEditingLaundry(null)}>Cancel</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }
