@@ -19,6 +19,7 @@ function Laundries() {
         const data = await response.json(); 
         const allLaundries = data.flatMap(user => user.laundries);
         setLaundries(allLaundries);  
+        console.log(data);
       } catch (error) {
         console.error("Error fetching laundries:", error);
       }
@@ -146,7 +147,7 @@ function Laundries() {
                     <button className="book-btn" onClick={(e) => {
                       e.stopPropagation();
                       handleBookNow(laundry);
-                    }}>Book Now</button>
+                    }}>Visualize Data</button>
                   </div>
                 </div>
               </div>
